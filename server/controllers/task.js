@@ -4,7 +4,7 @@ const { jwt } = require('../helpers')
 
 class Controller {
     static create(req, res) {
-        let decoded = jwt.jwtVerify(req.headers.token, process.env.JWT_SECRET)
+        let decoded = jwt.jwtVerify(req.headers.token)
         Task
             .create({ ...req.body, user: decoded.id })
             .then(success => {
@@ -16,7 +16,7 @@ class Controller {
     }
 
     static getAllTaskByUser(req, res) {
-        let decoded = jwt.jwtVerify(req.headers.token, process.env.JWT_SECRET)
+        let decoded = jwt.jwtVerify(req.headers.token)
         Task
             .find({ user: decoded.id })
             .populate('user')
@@ -60,6 +60,7 @@ class Controller {
                 new: true
             })
             .then(task => {
+                console.log(task)
                 if (task) {
                     res.status(200).json(task)
                 } else {
@@ -69,7 +70,7 @@ class Controller {
                 }
             })
             .catch(err => {
-                res.status(500).json(err)
+                res.status(500).json(err.message)
             })
     }
 

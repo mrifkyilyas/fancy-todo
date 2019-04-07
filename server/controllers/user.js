@@ -1,6 +1,8 @@
 const { Task, User } = require('../models')
 const { bcrypt, jwt } = require('../helpers')
-// console.log(require('../helpers'))
+const { OAuth2Client } = require('google-auth-library')
+const CLIENT_ID = "279578333779-le6son4i7oepdkjvllnsvca5k1ste2va.apps.googleusercontent.com"
+const client = new OAuth2Client(CLIENT_ID)
 class Controller {
     static register(req, res) {
         User.create({
@@ -24,12 +26,12 @@ class Controller {
             .then(found => {
                 // console.log(req.body.password)
                 console.log(found)
-                if (found && bcrypt.comparePassword(req.body.password,found.password)) {
+                if (found && bcrypt.comparePassword(req.body.password, found.password)) {
                     let token = jwt.jwtSign({
                         id: found.id,
-                        email:found.email
+                        email: found.email
                     })
-                    
+
                     res.status(200).json({
                         id: found.id,
                         name: found.name,
@@ -47,9 +49,60 @@ class Controller {
             })
             .catch(err => {
                 res.status(500).json('salah')
-
             })
+    }
 
+    static googleLogin(req, res) {
+        console.log('masuk')
+        client
+            .verifyIdToken({
+                idToken: req.body.token,
+                audience: CLIENT_ID
+            })
+            .then(ticket => {
+                let payload = ticket.getPayload()
+                return Promise.all([User
+                    .findOne({
+                        email: payload.email
+                    }), payload
+                ])
+            })
+            .then(([user, payload]) => {
+                if (!user) {
+                    console.log('akun baru')
+                    // console.log(payload,'ini payload')
+                    return User
+                        .create({
+                            name: payload.name,
+                            email: payload.email,
+                            password: `lalala`,
+                        })
+
+                } else {
+                    console.log('udah ada')
+                    return user
+                }
+            })
+            .then(user => {
+                // console.log('masuk,sini')
+                // console.log(user._id, 'ini user untuk jwt')
+
+
+                const token = jwt.jwtSign({
+                    id: user._id,
+                    email:user.email
+                })
+                console.log(token)
+                // console.log('masuk == ')
+
+                res.status(200).json({
+                    token: token
+                })
+                // console.log('masuk == ')
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
     }
 
 
