@@ -1,26 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fancy To Do</title>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-   
-  
-    <meta name="google-signin-client_id" content="279578333779-le6son4i7oepdkjvllnsvca5k1ste2va.apps.googleusercontent.com">
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <meta name="google-signin-client_id"
+        content="279578333779-le6son4i7oepdkjvllnsvca5k1ste2va.apps.googleusercontent.com">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+
 
 </head>
-<body>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <a href="#" onclick="signOut();">Sign out</a>
 
+<body>
+    <!--Navbar -->
+
+    <!--/.Navbar -->
+
+
+
+    <nav id="navbars" class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark info-color">
+        <a class="navbar-brand" href="#">Fancy-Todo-List</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+            aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="" id="sign-in" data-toggle="modal" data-target="#modalLRForm">
+                        <i class="fas fa-sign-in-alt"> login/register</i>
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown" id="dropdown-user">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i> Profile </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-info"
+                        aria-labelledby="navbarDropdownMenuLink-4">
+                        <a class="dropdown-item" href="#">My account</a>
+                        <a href="#" id="sign-out" onclick="signOut();">Sign out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!--Modal: Login / Register Form-->
+    <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <!--Content-->
+            <div class="modal-content">
+
+                <!--Modal cascading tabs-->
+                <div class="modal-c-tabs">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i
+                                    class="fas fa-user mr-1"></i>
+                                Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i
+                                    class="fas fa-user-plus mr-1"></i>
+                                Register</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panels -->
+                    <div class="tab-content">
+                        <!--Panel 7-->
+                        <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+                            <!--Body-->
+                            <form id="form-login">
+                                <div class="modal-body mb-1">
+                                    <div class="md-form form-sm mb-5">
+                                        <i class="fas fa-envelope prefix"></i>
+                                        <input type="email" id="login-email"
+                                            class="form-control form-control-sm validate">
+                                        <label data-error="wrong" data-success="right" for="login-email">Your
+                                            email</label>
+                                    </div>
+
+                                    <div class="md-form form-sm mb-4">
+                                        <i class="fas fa-lock prefix"></i>
+                                        <input type="password" id="login-password"
+                                            class="form-control form-control-sm validate">
+                                        <label data-error="wrong" data-success="right" for="login-password">Your
+                                            password</label>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <button type="submit" onsubmit="postlogin()" class="btn btn-info"  >Log in <i
+                                                class="fas fa-sign-in ml-1"></i></button>
+                                    </div>
+                            </form>
+                        </div>
+                        <!--Footer-->
+                        <div class="modal-footer">
+                            <div class="options text-center text-md-right mt-1">
+                                <p>have a Google acoount? <div class="g-signin2" data-onsuccess="onSignIn">
+                                    </div>
+                                </p>
+                                <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                            </div>
+                            <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                    <!--/.Panel 7-->
+
+                    <!--Panel 8-->
+                    <div class="tab-pane fade" id="panel8" role="tabpanel">
+
+                        <!--Body-->
+                        <form id='form-register'>
+
+                            <div class="modal-body">
+                                <div class="md-form form-sm mb-5">
+                                    <i class="fas fa-user prefix"></i>
+                                    <input type="text" id="register-name" class="form-control form-control-sm validate">
+                                    <label data-error="wrong" data-success="right" for="register-name">Your
+                                        Name</label>
+                                </div>
+                                <div class="md-form form-sm mb-5">
+                                    <i class="fas fa-envelope prefix"></i>
+                                    <input type="email" id="register-email"
+                                        class="form-control form-control-sm validate">
+                                    <label data-error="wrong" data-success="right" for="register-email">Your
+                                        email</label>
+                                </div>
+
+                                <div class="md-form form-sm mb-5">
+                                    <i class="fas fa-lock prefix"></i>
+                                    <input type="password" id="register-password"
+                                        class="form-control form-control-sm validate">
+                                    <label data-error="wrong" data-success="right" for="register-password">Your
+                                        password</label>
+                                </div>
+
+                                <div class="text-center form-sm mt-2">
+                                    <button type="submit" class="btn btn-info">Sign up <i
+                                            class="fas fa-sign-in ml-1"></i></button>
+                                </div>
+
+                            </div>
+                        </form>
+                        <!--Footer-->
+                        <div class="modal-footer">
+                            <div class="options text-right">
+                                <p class="pt-1">have a Google account? <div class="g-signin2" data-onsuccess="onSignIn">
+                                    </div>
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!--/.Panel 8-->
+                </div>
+
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+    </div>
+    <!--Modal: Login / Register Form-->
+    <div id="muncul" class="container-fluid">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col-3-fluid fixed">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        <h4>Feature: </h4>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> <a class="nav-link active" data-toggle="tab" href="#panel7"
+                                role="tab"><i class="fas fa-archive"></i>
+                                AllTask</a></li>
+                        <li class="list-group-item"> <a class="nav-link active" data-toggle="tab" href="#panel7"
+                                role="tab"><i class="fas fa-calendar-day"></i>
+                                Today</a></li>
+                        <li class="list-group-item"> <a class="nav-link active" data-toggle="tab" href="#panel7"
+                                role="tab"><i class="far fa-calendar-alt"></i>
+                                Next 7 days</a></li>
+                        <li class="list-group-item"> <a class="nav-link active" data-toggle="tab" href="#panel7"
+                                role="tab"><i class="far fa-calendar-check"></i>
+                                complete</a></li>
+                        <li class="list-group-item"> <a class="nav-link active" data-toggle="tab" href="#panel7"
+                                role="tab"><i class="far fa-calendar-times"></i>
+                                uncomplete</a></li>
+                        <li class="list-group-item"> <a class="nav-link active" data-toggle="tab" href="#panel7"
+                                role="tab"><i class="fas fa-history"></i>
+                                History</a></li>
+
+                    </ul>
+                </div>
+
+            </div>
+            <!---content -->
+            <div class="col-5 ">
+                <div class="card">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        style="width:40px; height:40px;; font-size:30px; padding: 2px;"><i
+                            class="far fa-plus-square  fa-lg"></i>
+                    </button>
+                    <div class="card-body" id="todos">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+
+    <!--modal new task popup-->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">New Task</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="create-task" onsubmit="createTask()">
+                    <div class="modal-body">
+                        <div class="md-form">
+                            <input type="text" class="form-control" id="create-name">
+                        </div>
+                        <div class="md-form">
+                            <textarea type="text" id="create-description" class="form-control md-textarea"
+                                rows="3"></textarea>
+                        </div>
+                        <div class="md-form">
+                            <input type="date" id="create-duedate">
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+              
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+            </div>
+           
+        </div>
+    </div>
+    </div>
 
     <script src="./js/index.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+    
 </body>
+
 </html>

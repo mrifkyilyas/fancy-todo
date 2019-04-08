@@ -28,14 +28,16 @@ class Controller {
                 console.log(found)
                 if (found && bcrypt.comparePassword(req.body.password, found.password)) {
                     let token = jwt.jwtSign({
-                        id: found.id,
+                        id: found._id,
                         email: found.email
                     })
+                    console.log(token)
+                    
 
                     res.status(200).json({
-                        id: found.id,
-                        name: found.name,
-                        email: found.email,
+                        // id: found.id,
+                        // name: found.name,
+                        // email: found.email,
                         token: token
                     })
 
@@ -84,21 +86,15 @@ class Controller {
                 }
             })
             .then(user => {
-                // console.log('masuk,sini')
-                // console.log(user._id, 'ini user untuk jwt')
-
-
                 const token = jwt.jwtSign({
                     id: user._id,
                     email:user.email
                 })
                 console.log(token)
-                // console.log('masuk == ')
 
                 res.status(200).json({
                     token: token
                 })
-                // console.log('masuk == ')
             })
             .catch(err => {
                 res.status(500).json(err)
